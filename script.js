@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const addInputButton = document.getElementById("add-input");
   const addSelectButton = document.getElementById("add-select");
   const addTextAreaButton = document.getElementById("add-textarea");
+  const saveButton = document.getElementById("save");
 
   let formData = initialFormData || [];
 
@@ -54,6 +55,60 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       ele.type !== "select" &&
         newElement.setAttribute("placeholder", ele.placeholder);
+
+      const label = document.createElement("label");
+      label.textContent = ele.label;
+
+      const deleteButton = document.createElement("button");
+      deleteButton.addEventListener("click", function () {
+        formData = formData.filter((item) => item.id !== ele.id);
+
+        renderForm();
+      });
+
+      const div = document.createElement("div");
+      div.appendChild(label);
+      div.appendChild(newElement);
+      div.appendChild(deleteButton);
+
+      formContainer.appendChild(div);
     });
   }
+  renderForm();
+
+  addInputButton.addEventListener("click", function () {
+    const newInputElement = {
+      id: Math.random().toFixed(4),
+      type: "input",
+      label: "Sample Label",
+      placeholder: "Sample Placeholder",
+    };
+    formData.push(newInputElement);
+    renderForm();
+  });
+
+  addSelectButton.addEventListener("click", function () {
+    let newSelectElement = {
+      id: Math.random().toFixed(4),
+      type: "select",
+      label: "Sample Label",
+      options: ["Sample Option 1", "Sample Option 2", "Sample Option 3"],
+    };
+    formData.push(newSelectElement);
+    renderForm();
+  });
+
+  addTextAreaButton.addEventListener("click", function () {
+    const newTextareaElement = {
+      id: Math.random().toFixed(4),
+      type: "textarea",
+      label: "Sample Label",
+      placeholder: "Sample Placeholder",
+    };
+    formData.push(newTextareaElement);
+    renderForm();
+  });
+  saveButton.addEventListener("click", function () {
+    console.log(formData);
+  });
 });
