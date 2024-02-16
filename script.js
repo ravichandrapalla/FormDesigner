@@ -111,10 +111,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   addSelectButton.addEventListener("click", function () {
     let newSelectElement = {
-      id: Math.random().toFixed(4),
+      id: generateId(),
       type: "select",
       label: "Sample Label",
-      options: ["Sample Option 1", "Sample Option 2", "Sample Option 3"],
+      options: ["Sample Option", "Sample Option", "Sample Option"],
     };
     formData.push(newSelectElement);
     renderForm();
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   addTextAreaButton.addEventListener("click", function () {
     const newTextareaElement = {
-      id: Math.random().toFixed(4),
+      id: generateId(),
       type: "textarea",
       label: "Sample Label",
       placeholder: "Sample Placeholder",
