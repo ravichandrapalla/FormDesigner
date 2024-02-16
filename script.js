@@ -76,11 +76,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const label = document.createElement("label");
       label.setAttribute("for", `${newElement.getAttribute("id")}`);
+      label.setAttribute("class", "label");
       label.textContent = ele.label;
 
       const deleteButton = document.createElement("button");
       deleteButton.textContent = "Delete";
-      deleteButton.innerHTML = '<span class="icon">&#128465;</span>';
+      deleteButton.setAttribute("class", "delete-button");
+      deleteButton.innerHTML = '<span class="icon delete">&#128465;</span>';
       deleteButton.addEventListener("click", function () {
         formData = formData.filter((item) => item.id !== ele.id);
 
