@@ -34,6 +34,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const saveButton = document.getElementById("save");
 
   let formData = initialFormData || [];
+  function generateId() {
+    let template = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+    let uniqueId = template.replace(/x/g, () =>
+      Math.floor(Math.random() * 16).toString(16)
+    );
+    return uniqueId;
+  }
 
   function renderForm() {
     formContainer.innerHTML = "";
@@ -96,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   addInputButton.addEventListener("click", function () {
     const newInputElement = {
-      id: Math.random().toFixed(4),
+      id: generateId(),
       type: "input",
       label: "Sample Label",
       placeholder: "Sample Placeholder",
