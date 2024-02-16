@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const draggableDiv = document.createElement("div");
       draggableDiv.draggable = true;
       draggableDiv.dataset.index = index;
+      draggableDiv.setAttribute("class", "single-item");
 
       let newElement;
       if (ele.type === "input") {
@@ -93,8 +94,15 @@ document.addEventListener("DOMContentLoaded", function () {
       // div.appendChild(deleteButton);
 
       // formContainer.appendChild(div);
-      draggableDiv.appendChild(label);
-      draggableDiv.appendChild(newElement);
+
+      //
+      // draggableDiv.appendChild(label);
+      // draggableDiv.appendChild(newElement);
+      const fieldContainer = document.createElement("div");
+      fieldContainer.setAttribute("class", "flex");
+      fieldContainer.appendChild(label);
+      fieldContainer.appendChild(newElement);
+      draggableDiv.appendChild(fieldContainer);
       draggableDiv.appendChild(deleteButton);
       formContainer.appendChild(draggableDiv);
     });
