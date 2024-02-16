@@ -38,13 +38,21 @@ document.addEventListener("DOMContentLoaded", function () {
   function renderForm() {
     formContainer.innerHTML = "";
 
-    formData.forEach((ele) => {
+    formData.forEach((ele, index) => {
+      const draggableDiv = document.createElement("div");
+      draggableDiv.draggable = true;
+      draggableDiv.dataset.index = index;
+
       let newElement;
       if (ele.type === "input") {
         newElement = document.createElement("input");
         newElement.setAttribute("type", "text");
+        newElement.setAttribute("name", "input-element");
+        newElement.setAttribute("id", "input-element");
       } else if (ele.type === "select") {
         newElement = document.createElement("select");
+        newElement.setAttribute("name", "select-element");
+        newElement.setAttribute("id", "select-element");
         ele.options.forEach((option) => {
           const optionElement = document.createElement("option");
           optionElement.textContent = option;
@@ -52,26 +60,36 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       } else if (ele.type === "textarea") {
         newElement = document.createElement("textarea");
+        newElement.setAttribute("name", "text-area-element");
+        newElement.setAttribute("id", "text-area-element");
       }
       ele.type !== "select" &&
         newElement.setAttribute("placeholder", ele.placeholder);
 
       const label = document.createElement("label");
+      label.setAttribute("for", `${newElement.getAttribute("id")}`);
       label.textContent = ele.label;
+      // ele.type === "input" &&
+      //   label.setAttribute("for", `${newElement.getAttribute(id)}`);
 
       const deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
       deleteButton.addEventListener("click", function () {
         formData = formData.filter((item) => item.id !== ele.id);
 
         renderForm();
       });
 
-      const div = document.createElement("div");
-      div.appendChild(label);
-      div.appendChild(newElement);
-      div.appendChild(deleteButton);
+      // const div = document.createElement("div");
+      // div.appendChild(label);
+      // div.appendChild(newElement);
+      // div.appendChild(deleteButton);
 
-      formContainer.appendChild(div);
+      // formContainer.appendChild(div);
+      draggableDiv.appendChild(label);
+      draggableDiv.appendChild(newElement);
+      draggableDiv.appendChild(deleteButton);
+      formContainer.appendChild(draggableDiv);
     });
   }
   renderForm();
@@ -110,5 +128,53 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   saveButton.addEventListener("click", function () {
     console.log(formData);
+  });
+  formContainer.addEventListener("dragstart", function (event) {
+    event.dataTransfer.setData("text/plain", event.target.dataset.index);
+  });
+
+  formContainer.addEventListener("dragover", function (event) {
+    event.preventDefault();
+    // const draggedIndex = parseInt(event.dataTransfer.getData("text/plain"));
+    // const dropTargetIndex = parseInt(event.target.dataset.index);
+    // const currentDraggedIndex = document.querySelector(".dragged");
+    // if (currentDraggedIndex !== null) {
+    //   formContainer.removeChild(document.querySelector(".dragged"));
+    // }
+
+    // const draggedElement = document.createElement("div");
+    // draggedElement.style.height = event.target.offsetHeight + "px";
+    // draggedElement.classList.add("dragged");
+    // formContainer.insertBefore(draggedElement, event.target);
+  });
+  formContainer.addEventListener("drop", function (event) {
+    const fromIndex = event.dataTransfer.getData("text/plain");
+    const toIndex = event.target.dataset.index;
+    const movedElement = formData.splice(fromIndex, 1)[0];
+
+    formData.splice(toIndex, 0, movedElement);
+
+    console.log(
+      "fromIndex ---> ",
+      fromIndex,
+      "toIndex ---> ",
+      toIndex,
+      "movedElement ---> ",
+      movedElement
+    );
+    renderForm();
+
+    // event.preventDefault();
+
+    // const fromIndex = parseInt(event.dataTransfer.getData("text/plain"));
+    // const toIndex = parseInt(event.target.dataset.index);
+    // const movedElement = formData.splice(fromIndex, 1)[0];
+    // formData.splice(toIndex, 0, movedElement);
+    // renderForm();
+    // const draggedIndex = parseInt(event.dataTransfer.getData("text/plain"));
+    // const currentDraggedIndex = document.querySelector(".dragged");
+    // if (currentDraggedIndex !== null) {
+    //   formContainer.removeChild(document.querySelector(".dragged"));
+    // }
   });
 });
