@@ -68,6 +68,12 @@ form {
 }
 button {
   border: none;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+aside button {
+  border: none;
   border-radius: 5px;
   outline: none;
   padding: 0.3rem;
@@ -76,7 +82,7 @@ button {
   text-align: left;
   cursor: pointer;
 }
-button::after {
+aside button::after {
   content: "+";
   margin-left: 0.5rem;
 }

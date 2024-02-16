@@ -82,6 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const deleteButton = document.createElement("button");
       deleteButton.textContent = "Delete";
+      deleteButton.innerHTML = '<span class="icon">&#128465;</span>';
       deleteButton.addEventListener("click", function () {
         formData = formData.filter((item) => item.id !== ele.id);
 
