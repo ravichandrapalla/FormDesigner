@@ -167,18 +167,22 @@ option::placeholder {
 }
 #save:hover {
   transition: 0.5s;
-  scale: 1.1;
+  box-shadow: 0 0 1px 1px green;
+  scale: 1.05;
+}
+.delete-button {
+  background-color: red;
 }
 .delete-button:hover {
   box-shadow: 0 0 5px 5px red;
   /* background-color: red; */
-  color: #fff;
+  color: red;
   transition: 0.5s;
   scale: 1.3;
 }
 .delete {
   /* background-color: #ef4040; */
-  color: tomato;
+  color: white;
   font-weight: bolder;
 }
 .label {

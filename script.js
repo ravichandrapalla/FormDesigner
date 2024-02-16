@@ -133,6 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
     renderForm();
   });
   saveButton.addEventListener("click", function () {
+    saveButton.disabled = true;
     console.log(formData);
   });
   formContainer.addEventListener("dragstart", function (event) {
