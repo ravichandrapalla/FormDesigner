@@ -77,8 +77,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const label = document.createElement("label");
       label.setAttribute("for", `${newElement.getAttribute("id")}`);
       label.textContent = ele.label;
-      // ele.type === "input" &&
-      //   label.setAttribute("for", `${newElement.getAttribute(id)}`);
 
       const deleteButton = document.createElement("button");
       deleteButton.textContent = "Delete";
@@ -89,16 +87,6 @@ document.addEventListener("DOMContentLoaded", function () {
         renderForm();
       });
 
-      // const div = document.createElement("div");
-      // div.appendChild(label);
-      // div.appendChild(newElement);
-      // div.appendChild(deleteButton);
-
-      // formContainer.appendChild(div);
-
-      //
-      // draggableDiv.appendChild(label);
-      // draggableDiv.appendChild(newElement);
       const fieldContainer = document.createElement("div");
       fieldContainer.setAttribute("class", "flex");
       fieldContainer.appendChild(label);
@@ -147,25 +135,25 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   formContainer.addEventListener("dragstart", function (event) {
     event.dataTransfer.setData("text/plain", event.target.dataset.index);
+    console.log("at start ---> ", event.target.parentNode);
   });
 
   formContainer.addEventListener("dragover", function (event) {
     event.preventDefault();
-    // const draggedIndex = parseInt(event.dataTransfer.getData("text/plain"));
-    // const dropTargetIndex = parseInt(event.target.dataset.index);
-    // const currentDraggedIndex = document.querySelector(".dragged");
-    // if (currentDraggedIndex !== null) {
-    //   formContainer.removeChild(document.querySelector(".dragged"));
-    // }
-
-    // const draggedElement = document.createElement("div");
-    // draggedElement.style.height = event.target.offsetHeight + "px";
-    // draggedElement.classList.add("dragged");
-    // formContainer.insertBefore(draggedElement, event.target);
   });
   formContainer.addEventListener("drop", function (event) {
-    const fromIndex = event.dataTransfer.getData("text/plain");
-    const toIndex = event.target.dataset.index;
+    event.preventDefault();
+
+    const fromIndex = parseInt(event.dataTransfer.getData("text/plain"));
+    let target = event.target;
+    while (target && !target.classList.contains("single-item")) {
+      target = target.parentNode;
+    }
+    if (!target) {
+      console.log("target dom is not found");
+      return;
+    }
+    const toIndex = parseInt(target.dataset.index); // Get the index from the parent node
     const movedElement = formData.splice(fromIndex, 1)[0];
 
     formData.splice(toIndex, 0, movedElement);
@@ -176,21 +164,10 @@ document.addEventListener("DOMContentLoaded", function () {
       "toIndex ---> ",
       toIndex,
       "movedElement ---> ",
-      movedElement
+      movedElement,
+      "event ----> ",
+      event.target.parentNode
     );
     renderForm();
-
-    // event.preventDefault();
-
-    // const fromIndex = parseInt(event.dataTransfer.getData("text/plain"));
-    // const toIndex = parseInt(event.target.dataset.index);
-    // const movedElement = formData.splice(fromIndex, 1)[0];
-    // formData.splice(toIndex, 0, movedElement);
-    // renderForm();
-    // const draggedIndex = parseInt(event.dataTransfer.getData("text/plain"));
-    // const currentDraggedIndex = document.querySelector(".dragged");
-    // if (currentDraggedIndex !== null) {
-    //   formContainer.removeChild(document.querySelector(".dragged"));
-    // }
   });
 });
