@@ -133,7 +133,6 @@ document.addEventListener("DOMContentLoaded", function () {
     renderForm();
   });
   saveButton.addEventListener("click", function () {
-    saveButton.disabled = true;
     console.log(formData);
   });
   formContainer.addEventListener("dragstart", function (event) {
@@ -161,16 +160,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     formData.splice(toIndex, 0, movedElement);
 
-    console.log(
-      "fromIndex ---> ",
-      fromIndex,
-      "toIndex ---> ",
-      toIndex,
-      "movedElement ---> ",
-      movedElement,
-      "event ----> ",
-      event.target.parentNode
-    );
+    // console.log(
+    //   "fromIndex ---> ",
+    //   fromIndex,
+    //   "toIndex ---> ",
+    //   toIndex,
+    //   "movedElement ---> ",
+    //   movedElement,
+    //   "event ----> ",
+    //   event.target.parentNode
+    // );
     renderForm();
   });
 });
